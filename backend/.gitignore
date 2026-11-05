@@ -1,0 +1,9 @@
+# 构建输出和本地缓存；Wrapper 文件需要提交
+target/
+build/
+.gradle/
+*.class
+
+# 本地运行日志
+logs/
+*.log

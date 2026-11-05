@@ -1,0 +1,83 @@
+name: 固定规则区检查
+
+# 检查 AGENTS.md 中 FIXED-RULES 标记之间的内容是否被改动。
+# 规则由负责人统一发布，学员不得修改。
+#
+# 负责人更新规则后，在提交前重新计算哈希，写入 .github/fixed-rules.sha256：
+#   tr -d '\r' < AGENTS.md \
+#     | awk '/^<!-- FIXED-RULES:BEGIN -->$/{f=1} f{print} /^<!-- FIXED-RULES:END -->$/{f=0}' \
+#     | sha256sum
+#
+# 这个检查是提醒，不是防篡改。同时修改工作流或哈希文件可以让检查通过，
+# 但那样的改动会出现在 PR 差异里。
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fixed-rules:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 比较固定规则区哈希
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          file="AGENTS.md"
+          hash_file=".github/fixed-rules.sha256"
+          begin='<!-- FIXED-RULES:BEGIN -->'
+          end='<!-- FIXED-RULES:END -->'
+
+          if [ ! -f "$file" ]; then
+            echo "::error::找不到 $file"
+            exit 1
+          fi
+
+          if [ ! -f "$hash_file" ]; then
+            echo "::error::找不到 $hash_file"
+            exit 1
+          fi
+
+          begin_count=$(grep -cF "$begin" "$file" || true)
+          end_count=$(grep -cF "$end" "$file" || true)
+          if [ "$begin_count" -ne 1 ] || [ "$end_count" -ne 1 ]; then
+            echo "::error file=$file::固定规则标记必须各出现一次，当前 BEGIN=$begin_count END=$end_count"
+            exit 1
+          fi
+
+          actual=$(
+            tr -d '\r' < "$file" | awk -v b="$begin" -v e="$end" '
+              $0 == b { inside = 1 }
+              inside { print }
+              $0 == e { inside = 0 }
+            ' | sha256sum | cut -d' ' -f1
+          )
+          expected=$(
+            grep -v '^[[:space:]]*#' "$hash_file" | tr -d ' \r\n'
+          )
+          if [ -z "$expected" ]; then
+            echo "::error file=$hash_file::哈希文件里没有哈希值"
+            exit 1
+          fi
+
+          echo "期望哈希: $expected"
+          echo "实际哈希: $actual"
+
+          if [ "$actual" != "$expected" ]; then
+            echo "::error file=$file::固定规则区已被改动。规则由负责人统一发布，学员不得修改。"
+            exit 1
+          fi
+
+          echo "固定规则区未改动。"
