@@ -4,7 +4,7 @@ Thumbs.db
 Desktop.ini
 .idea/
 *.iml
-
+out/
 # 本地环境配置；示例文件只能使用占位值
 .env
 .env.*
