@@ -7,15 +7,30 @@ public class Member {
        private String college;
        private String StudenID;
        //构造方法
+    //不带参数的构造方法
+    public Member(){
+    }
+    //带全部参数的构造方法
+    public Member(String name,String gender,String college,String StudenID){
+        this.name = name;
+        this.gender = gender;
+        this.college = college;
+        this.StudenID = StudenID;
+    }
+
+    //set成员信息
         public void setName(String name){
                 this.name = name;
         }
+
         public void setGender(String gender){
                 this.gender = gender;
         }
+
         public void setCollege(String college){
                 this.college = college;
         }
+
         public void setStudenID(String StudenID){
                 this.StudenID = StudenID;
         }
@@ -23,12 +38,15 @@ public class Member {
         public String getName(){
                 return name;
         }
+
         public String getGender(){
                 return gender;
         }
+
         public String getCollege(){
                 return college;
         }
+
         public String getStudenID(){
                 return StudenID;
         }
