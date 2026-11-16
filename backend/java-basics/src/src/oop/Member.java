@@ -6,6 +6,7 @@ public class Member {
        private String gender;
        private String college;
        private String StudenID;
+       private String role;
        //构造方法
     //不带参数的构造方法
     public Member(){
@@ -16,6 +17,7 @@ public class Member {
         this.gender = gender;
         this.college = college;
         this.StudenID = StudenID;
+        this.role = "member";
     }
 
     //set成员信息
@@ -34,6 +36,9 @@ public class Member {
         public void setStudenID(String StudenID){
                 this.StudenID = StudenID;
         }
+        public void setRole(String role){
+                this.role = role;
+        }
         //获取成员信息get
         public String getName(){
                 return name;
@@ -49,6 +54,9 @@ public class Member {
 
         public String getStudenID(){
                 return StudenID;
+        }
+        public String getRole(){
+                return role;
         }
 
 }
