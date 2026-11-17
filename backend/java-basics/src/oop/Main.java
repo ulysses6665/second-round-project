@@ -1,7 +1,7 @@
 package oop;
 
-public class main {
-    static void main() {
+public class Main {
+    public static void main(String[] args) {
         Project p = new Project("传感器采购", 1000);
         System.out.println(p);          // 初始
 
