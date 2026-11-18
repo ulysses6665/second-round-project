@@ -2,6 +2,7 @@ package oop;
 
 public class Main {
     public static void main(String[] args) {
+/*
         Project p = new Project("传感器采购", 1000);
         System.out.println(p);          // 初始
 
@@ -13,5 +14,11 @@ public class Main {
 
         p.settle(500, 460);             // 结算：批 500，实花 460
         System.out.println(p);
+*/
+
+        Member lin = new Member("小林", "男", "霍格沃茨", "10086");
+        Project p2 = new Project("传感器采购", 1000);
+        Application app = new Application(1, p2, lin, "买传感器", 600);
+        System.out.println(app);
     }
 }
