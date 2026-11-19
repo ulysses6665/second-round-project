@@ -21,6 +21,18 @@ public class Project {
         this.forzen = 0;
         this.used = 0;
     }
+    public int getAvailable(){
+        return available;
+    }
+    public int getForzen(){
+        return forzen;
+    }
+    public int getUsed(){
+        return used;
+    }
+    public int getTotal(){
+        return total;
+    }
 
     //1.冻结；提交时使用
     //用boolean来确定目前申请的冻结是否成功
