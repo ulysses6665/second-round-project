@@ -1,12 +1,10 @@
 package oop;
 
-import java.awt.print.PrinterAbortException;
-
 public class Project {
     private String name;
     private int total;
     private int available;//一开始全在可用里
-    private int forzen;
+    private int frozen;
     private int used;
 
     public Project(String name, int total) {
@@ -18,14 +16,14 @@ public class Project {
         //初始的钱
         this.total = total;
         this.available = total;
-        this.forzen = 0;
+        this.frozen = 0;
         this.used = 0;
     }
     public int getAvailable(){
         return available;
     }
     public int getForzen(){
-        return forzen;
+        return frozen;
     }
     public int getUsed(){
         return used;
@@ -38,34 +36,34 @@ public class Project {
     //用boolean来确定目前申请的冻结是否成功
     public boolean freeze(int amount) {
         if (amount <= 0) {
-            System.out.println("失败");
+            System.out.println("你申请的金额小于等于零，冻结失败");
             return false;
         }
         if (amount > available) {
-            System.out.println("失败");
+            System.out.println("你申请的金额大于可用金额，冻结失败");
             return false;
         }
         //冻结的是项目请求的
         //现在的可用是留给别的项目的
         available = available - amount;
         //后来冻结的是前面冻结的加上现在申请的
-        forzen = forzen + amount;
+        frozen = frozen + amount;
         return true;
     }
 
     //2.释放
     //还回来的钱（不给用的）
     public boolean release(int amount) {
-        if (amount <= 0) {
-            System.out.println("失败");
+        if (amount < 0) {
+            System.out.println("你失败了");
             return false;
         }
         //拿回来的钱不能大于目前冻结的
-        if (amount > forzen) {
+        if (amount > frozen) {
             System.out.println("失败 （好无奈）");
             return false;
         }
-        forzen = forzen - amount;
+        frozen = frozen - amount;
         available = available + amount;
         return true;
     }
@@ -81,7 +79,7 @@ public class Project {
             System.out.println("实际花费必须在 0 到批准金额之间");
             return false;
         }
-        forzen = forzen - ApproveAmount;
+        frozen = frozen - ApproveAmount;
         used = used + ActualAmount;
         available = available + (ApproveAmount - ActualAmount);
         return true;
@@ -89,13 +87,13 @@ public class Project {
 
     //4.检查一下钱守恒
     public boolean check() {
-        return total == available + forzen + used && available >= 0 && forzen >= 0 && used >= 0;
+        return total == available + frozen + used && available >= 0 && frozen >= 0 && used >= 0;
     }
     //5.打印检查
     @Override
     public String toString(){
         return "["+name+"] 可用="+available
-                +" 冻结="+forzen+" 已使用="+used
+                +" 冻结="+ frozen +" 已使用="+used
                 + " 校验=" + (check() ? "通过" : "失败");//三目运算输出有没有问题
     }
 }
