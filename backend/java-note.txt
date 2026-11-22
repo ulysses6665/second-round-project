@@ -1,0 +1,46 @@
+枚举：一个特殊的javabean类，其中的对象是有限的
+定义格式：
+public enum 枚举类名{
+
+对象1 对象2 对象3；（枚举项x）
+属性
+
+行为
+}
+1.枚举类中
+public enum */*1.用enum代替class*/*OrderState {
+   //这个类所有的对象
+   //OrderState PAYMENT_PENDING = new OrderState("待支付");
+   o1("待支付"),
+   o2("处理中"),
+//把public改成private 因为不让外界构造
+    private String name;
+
+    //found way
+    private OrderState(String name){
+        this.name = name;
+    }
+
+    //set and get（把set去掉；因为所有对象已经定义好了）
+    public String getName(){
+        return name;
+    }
+}
+2.测试类中
+public static void main(){
+
+OrderState O1 = OrderState.o1;
+OrderState O2 = OrderState.o2;
+
+sout(O1.getName());
+switch(O1)
+case o1: .....
+case o2: .....
+}
+//类似final
+
+
+
+
+
+}

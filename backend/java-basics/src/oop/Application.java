@@ -158,7 +158,25 @@ public class Application {
         status = AppStatus.CANCELED;  //暂时不知道什么问题
         return true;
     }
-
+//结算
+public boolean settle(int actualAmount) {
+        //批准后才能结算
+    if (status != AppStatus.APPROVED) {
+        System.out.println("只有已批准才能结算");
+        return false;
+    }
+    if (actualAmount < 0 || actualAmount > approveAmount) {
+        System.out.println("实际花费必须在 0 到批准金额之间");
+        return false;
+    }
+    if (!project.settle(approveAmount, actualAmount)) {
+        System.out.println("结算失败：预算回滚异常");
+        return false;
+    }
+    this.settledAmount = actualAmount;
+    status = AppStatus.SETTLED;
+    return true;
+}
 
     //toString方法
     @Override
