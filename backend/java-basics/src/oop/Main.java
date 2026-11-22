@@ -33,7 +33,7 @@ public class Main {
 
     //正常场景
     static void sence_normal() {
-        System.out.println("2.正常场景");
+        System.out.println("1.正常场景");
         Member lin = new Member("小林", "男", "霍格沃茨", "10086");
         Project p1 = new Project("传感器采购", 1000);
         Application app1 = new Application(1, p1, lin, "买传感器", 600);
@@ -59,7 +59,10 @@ public class Main {
             System.out.println("批准成功，状态=" + app1.getStatus().getName());
         }
         System.out.println(p1);
+        if (app1.settle(460))  System.out.println("结算成功，状态=" + app1.getStatus().getName() + "，" + p1);
+        else                  System.out.println("结算失败，状态保持=" + app1.getStatus().getName());
     }
+
     //取消场景
 
     static void sence_cancel1() {
@@ -131,14 +134,6 @@ public class Main {
         }
         System.out.println(p3);
     }
-
-
-//        Member lin = new Member("小林", "男", "霍格沃茨", "10086");
-//        Project p2 = new Project("传感器采购", 1000);
-//        Application app = new Application(1, p2, lin, "买传感器", 600);
-//        System.out.println("提交前的状态是"+app.getStatus().getName());
-//        System.out.println(p2);
-
 
 
 
