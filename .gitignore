@@ -16,5 +16,5 @@ out/
 *.pem
 *.p12
 *.pfx
-
+backend/java-basics/src/db.properties
 # 不忽略 .agents/，项目技能和脱敏会话记录需要提交
