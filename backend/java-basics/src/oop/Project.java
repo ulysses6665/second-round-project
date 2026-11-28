@@ -1,6 +1,7 @@
 package oop;
 
 public class Project {
+    private int id;              //补sql的运用
     private String name;
     private int total;
     private int available;//一开始全在可用里
@@ -19,6 +20,22 @@ public class Project {
         this.frozen = 0;
         this.used = 0;
     }
+    //全参构造     装sql中补充的
+    // 给 DAO 从数据库还原对象用
+    public Project(int id, String name, int total, int available, int frozen, int used) {
+        this.id = id;
+        this.name = name;
+        this.total = total;
+        this.available = available;
+        this.frozen = frozen;
+        this.used = used;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
     public int getAvailable(){
         return available;
     }
